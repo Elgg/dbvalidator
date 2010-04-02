@@ -15,6 +15,7 @@ $english = array(
 	'dbvalidate:newowner' => "you are now owner",
 	'dbvalidate:failowner' => "failed to set owner",
 	'dbvalidate:done' => "Done!",
+	'dbvalidate:type' => "Object type",
 
 
 );

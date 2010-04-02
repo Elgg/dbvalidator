@@ -26,6 +26,7 @@ if ($users !== false && count($users) > 0) {
 	echo "</ul>";
 } else {
 	echo elgg_echo('dbvalidate:nobadusernames');
+	echo "<br />";
 }
 
 echo "<br />";
@@ -39,7 +40,7 @@ if (count($bad_guids) > 0) {
 	echo "<ul>";
 	foreach ($bad_guids as $guid) {
 		echo "<li>";
-		echo "GUID: {$guid}";
+		echo "GUID: {$guid} - " . elgg_echo('dbvalidate:type') . ': ' . dbvalidate_get_object_type($guid);
 		echo "</li>";
 	}
 	echo "</ul>";

@@ -81,5 +81,27 @@ function dbvalidate_get_bad_entities() {
 	return $bad_guids;
 }
 
+/**
+ * Get the object type or group as a string for a guid
+ */
+function dbvalidate_get_object_type($guid) {
+	global $CONFIG;
+	
+	$guid = (int)$guid;
+	$query = "SELECT type, subtype from {$CONFIG->dbprefix}entities WHERE guid={$guid}";
+	$result = get_data_row($query);
+	
+	if ($result->type == 'group') {
+		return "group";
+	}
+
+	$subtype = get_subtype_from_id($result->subtype);
+	if ($subtype) {
+		return $subtype;
+	}
+
+	return "unknown";
+}
+
 register_elgg_event_handler('init', 'system', 'dbvalidate_init');
 register_elgg_event_handler('pagesetup', 'system', 'dbvalidate_pagesetup');
