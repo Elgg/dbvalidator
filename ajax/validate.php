@@ -11,6 +11,8 @@ require_once(dirname(dirname(dirname(dirname(__FILE__)))) . "/engine/start.php")
 
 admin_gatekeeper();
 
+$users_string = elgg_echo('users');
+echo "<h3>$users_string</h3>";
 
 $users = dbvalidate_get_bad_users();
 
@@ -31,6 +33,8 @@ if ($users !== false && count($users) > 0) {
 
 echo "<br />";
 
+$entities_string = elgg_echo('entities');
+echo "<h3>$entities_string</h3>";
 
 $bad_guids = dbvalidate_get_bad_entities();
 
@@ -47,5 +51,29 @@ if (count($bad_guids) > 0) {
 } else {
 	echo elgg_echo('dbvalidate:nobadowners');
 }
+
+echo "<br />";
+
+
+$incomplete_entities = dbvalidate_get_incomplete_entities();
+
+// write html for incomplete entities
+if ($incomplete_entities !== false && count($incomplete_entities) > 0) {
+	echo elgg_echo('dbvalidate:incompleteentities');
+	echo "<ul>";
+	foreach ($incomplete_entities as $entity) {
+		echo "<li>";
+		echo "GUID: {$entity->guid}, " . elgg_echo('dbvalidate:type') . ": {$entity->type}";
+		if ($subtype = get_subtype_from_id($entity->subtype)) {
+			echo ":$subtype";
+		}
+		echo "</li>";
+	}
+	echo "</ul>";
+} else {
+	echo elgg_echo('dbvalidate:noincompleteentities');
+	echo "<br />";
+}
+
 
 exit;

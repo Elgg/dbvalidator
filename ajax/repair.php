@@ -7,6 +7,14 @@
  * @copyright Cash Costello 2010
  */
 
+/*
+ * Yes, these chunks of html creation could be moved to views.
+ */
+
+
+/**
+ * Quick wrapper to give me true/false on existence of username
+ */
 function dbv_test_username_avail($username) {
 	if (get_user_by_username($username)) {
 		return FALSE;
@@ -22,7 +30,7 @@ admin_gatekeeper();
 
 $users = dbvalidate_get_bad_users();
 
-// repair bad users
+// repair bad users - give them new usernames
 if ($users !== false && count($users) > 0) {
 	$user_count = 1;
 	echo elgg_echo('dbvalidate:fixbadusernames');
@@ -48,7 +56,7 @@ echo "<br />";
 
 $bad_guids = dbvalidate_get_bad_entities();
 
-// write html for bad entities
+// write html for bad entities - they get assigned to admin running this
 if (count($bad_guids) > 0) {
 	$new_guid = get_loggedin_userid();
 	echo elgg_echo('dbvalidate:fixbadowners');
@@ -68,6 +76,31 @@ if (count($bad_guids) > 0) {
 }
 
 echo "<br />";
+
+$incomplete_entities = dbvalidate_get_incomplete_entities();
+
+// write html for incomplete entities - delete them
+if ($incomplete_entities !== false && count($incomplete_entities) > 0) {
+	echo elgg_echo('dbvalidate:fixincompleteentities');
+	echo "<ul>";
+	foreach ($incomplete_entities as $entity) {
+		echo "<li>";
+		echo "GUID: {$entity->guid}, " . elgg_echo('dbvalidate:type') . ": {$entity->type}";
+		if ($subtype = get_subtype_from_id($entity->subtype)) {
+			echo ":$subtype";
+		}
+		$query = "DELETE FROM {$CONFIG->dbprefix}entities WHERE guid = {$entity->guid} LIMIT 1";
+		if (delete_data($query)) {
+			echo ' ' . elgg_echo('dbvalidate:removed');
+		}
+
+		echo "</li>";
+	}
+	echo "</ul>";
+}
+
+echo "<br />";
+
 
 echo elgg_echo('dbvalidate:done');
 

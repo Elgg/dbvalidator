@@ -82,6 +82,30 @@ function dbvalidate_get_bad_entities() {
 }
 
 /**
+ * Looks for entities without a corresponding entry in the correct type table.
+ */
+function dbvalidate_get_incomplete_entities() {
+	global $CONFIG;
+
+	$types = array('user', 'site', 'group', 'object');
+	$bad_guids = array();
+
+	foreach ($types as $type) {
+		$ENTITY_SHOW_HIDDEN_OVERRIDE = TRUE;
+
+		// thank you for consistent table naming
+		$query = "SELECT guid, type, subtype from {$CONFIG->dbprefix}entities WHERE type='{$type}'
+			AND guid NOT IN (SELECT guid FROM {$CONFIG->dbprefix}{$type}s_entity)";
+
+		if ($result = get_data($query)) {
+			$bad_guids = array_merge($bad_guids, $result);
+		}
+	}
+
+	return $bad_guids;
+}
+
+/**
  * Get the object type or group as a string for a guid
  */
 function dbvalidate_get_object_type($guid) {
