@@ -51,6 +51,7 @@ function dbvalidate_get_bad_users() {
 function dbvalidate_get_bad_entities() {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE;
 	global $CONFIG;
+	global $DB_QUERY_CACHE, $DB_PROFILE, $ENTITY_CACHE;
 
 	$ENTITY_SHOW_HIDDEN_OVERRIDE = TRUE;
 	$query = "SELECT COUNT(*) as total from {$CONFIG->dbprefix}entities WHERE type='object' OR type='group'";
@@ -63,6 +64,9 @@ function dbvalidate_get_bad_entities() {
 	$count = 0;
 	$step = 1000;
 	while ($count < $num_entities) {
+		// flush caches so that we don't have memory issues
+		$DB_QUERY_CACHE = $DB_PROFILE = $ENTITY_CACHE = array();
+
 		$query = "SELECT guid, owner_guid from {$CONFIG->dbprefix}entities WHERE type='object' OR type='group' LIMIT $count, $step";
 		$guids = get_data($query);
 		$count = $count += $step;
