@@ -27,6 +27,7 @@ require_once(dirname(dirname(dirname(dirname(__FILE__)))) . "/engine/start.php")
 
 admin_gatekeeper();
 
+set_time_limit(0);
 
 $users = dbvalidate_get_bad_users();
 

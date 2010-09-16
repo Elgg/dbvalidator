@@ -11,6 +11,8 @@ require_once(dirname(dirname(dirname(dirname(__FILE__)))) . "/engine/start.php")
 
 admin_gatekeeper();
 
+set_time_limit(0);
+
 $users_string = elgg_echo('users');
 echo "<h3>$users_string</h3>";
 
