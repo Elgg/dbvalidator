@@ -13,6 +13,11 @@
  */
 function dbvalidate_init() {
 	register_page_handler('dbvalidate', 'dbvalidate_page_handler');
+
+	global $CONFIG;
+	$action_path = "{$CONFIG->pluginspath}dbvalidate/actions";
+	register_action('dbvalidate/validate', FALSE, "$action_path/validate.php", TRUE);
+	register_action('dbvalidate/repair', FALSE, "$action_path/repair.php", TRUE);
 }
 
 /**

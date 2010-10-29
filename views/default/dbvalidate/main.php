@@ -2,6 +2,11 @@
 <p>
 <?php
 
+$validate_url = "{$vars['url']}action/dbvalidate/validate";
+$repair_url = "{$vars['url']}action/dbvalidate/repair";
+$validate_url = elgg_add_action_tokens_to_url($validate_url);
+$repair_url = elgg_add_action_tokens_to_url($repair_url);
+
 echo elgg_echo('dbvalidate:instructions');
 
 echo "<br />";
@@ -40,7 +45,7 @@ function dbvValidate()
 
 	$.ajax({
 		type: "GET",
-		url: "<?php echo $CONFIG->wwwroot . 'mod/dbvalidate/ajax/validate.php'; ?>",
+		url: "<?php echo $validate_url; ?>",
 		cache: false,
 		success: function(data){
 			$("#dbv_results").html(data);
@@ -62,7 +67,7 @@ function dbvRepair()
 
 	$.ajax({
 		type: "GET",
-		url: "<?php echo $CONFIG->wwwroot . 'mod/dbvalidate/ajax/repair.php'; ?>",
+		url: "<?php echo $repair_url; ?>",
 		cache: false,
 		success: function(data){
 			$("#dbv_results").html(data);
