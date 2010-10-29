@@ -7,8 +7,6 @@
  * @copyright Cash Costello 2010
  */
 
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
-
 set_context('admin');
 admin_gatekeeper();
 
