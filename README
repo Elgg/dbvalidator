@@ -1,6 +1,6 @@
 Elgg Database Cleaner
 
-It has a validate and clean mode. It can fix the following problems:
+It has a validate and a clean mode. It can fix the following problems:
 
 1. user without a username
 2. entity with owner_guid set to 0 (object or group)

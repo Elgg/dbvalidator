@@ -1,42 +1,26 @@
 <?php
-
 /**
  * Validate and repair an Elgg database
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
  * @author Cash Costello
- * @copyright Cash Costello 2010
+ * @copyright Cash Costello 2010-2011
  */
+
+elgg_register_event_handler('init', 'system', 'dbvalidate_init');
 
 /**
  * Initialize plugin
  */
 function dbvalidate_init() {
-	register_page_handler('dbvalidate', 'dbvalidate_page_handler');
 
-	global $CONFIG;
-	$action_path = "{$CONFIG->pluginspath}dbvalidate/actions";
-	register_action('dbvalidate/validate', FALSE, "$action_path/validate.php", TRUE);
-	register_action('dbvalidate/repair', FALSE, "$action_path/repair.php", TRUE);
-}
+	elgg_register_admin_menu_item('administer', 'dbvalidate', 'administer_utilities');
 
-/**
- * Loads controller
- * @return boolean
- */
-function dbvalidate_page_handler() {
-	require dirname( __FILE__) . "/index.php";
-	return true;
-}
+	elgg_register_js('dbvalidate', 'js/dbvalidate.js', 'footer');
 
-/**
- * Add admin menu item
- */
-function dbvalidate_pagesetup() {
-	if (get_context () == 'admin' && isadminloggedin ()) {
-		global $CONFIG;
-		add_submenu_item(elgg_echo('dbvalidate:title'), $CONFIG->wwwroot . 'pg/dbvalidate/');
-	}
+	$action_path = dirname(__FILE__) . '/actions';
+	elgg_register_action('dbvalidate/validate', "$action_path/validate.php", 'admin');
+	elgg_register_action('dbvalidate/repair', "$action_path/repair.php", 'admin');
 }
 
 /**
@@ -103,7 +87,7 @@ function dbvalidate_get_incomplete_entities() {
 		$ENTITY_SHOW_HIDDEN_OVERRIDE = TRUE;
 
 		// thank you for consistent table naming
-		$query = "SELECT guid, type, subtype from {$CONFIG->dbprefix}entities WHERE type='{$type}'
+		$query = "SELECT guid, type, subtype FROM {$CONFIG->dbprefix}entities WHERE type='{$type}'
 			AND guid NOT IN (SELECT guid FROM {$CONFIG->dbprefix}{$type}s_entity)";
 
 		if ($result = get_data($query)) {
@@ -121,7 +105,7 @@ function dbvalidate_get_object_type($guid) {
 	global $CONFIG;
 	
 	$guid = (int)$guid;
-	$query = "SELECT type, subtype from {$CONFIG->dbprefix}entities WHERE guid={$guid}";
+	$query = "SELECT type, subtype FROM {$CONFIG->dbprefix}entities WHERE guid={$guid}";
 	$result = get_data_row($query);
 	
 	if ($result->type == 'group') {
@@ -136,5 +120,13 @@ function dbvalidate_get_object_type($guid) {
 	return "unknown";
 }
 
-register_elgg_event_handler('init', 'system', 'dbvalidate_init');
-register_elgg_event_handler('pagesetup', 'system', 'dbvalidate_pagesetup');
+/**
+ * Quick wrapper to give me true/false on existence of username
+ */
+function dbvalidate_test_username_avail($username) {
+	if (get_user_by_username($username)) {
+		return false;
+	}
+
+	return true;
+}

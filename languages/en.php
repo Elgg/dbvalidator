@@ -1,6 +1,11 @@
 <?php
+/**
+ * English language file for database validator
+ */
 
 $english = array(
+
+	'admin:administer_utilities:dbvalidate' => "Database cleaner",
 
 	'dbvalidate:title' => "Database utility",
 	'dbvalidate:validate' => "Validate",
@@ -23,6 +28,4 @@ $english = array(
 
 );
 
-add_translation("en",$english);
-
-?>
+add_translation("en", $english);

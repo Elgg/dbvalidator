@@ -11,18 +11,6 @@
  * Yes, these chunks of html creation could be moved to views.
  */
 
-
-/**
- * Quick wrapper to give me true/false on existence of username
- */
-function dbv_test_username_avail($username) {
-	if (get_user_by_username($username)) {
-		return FALSE;
-	}
-
-	return TRUE;
-}
-
 set_time_limit(0);
 
 $users = dbvalidate_get_bad_users();
@@ -36,7 +24,7 @@ if ($users !== false && count($users) > 0) {
 		// create new username
 		$new_username = 'user' . $user_count;
 		$user_count = $user_count + 1;
-		while (!dbv_test_username_avail($new_username)) {
+		while (!dbvalidate_test_username_avail($new_username)) {
 			$new_username = 'user' . $user_count;
 			$user_count = $user_count + 1;
 		}
