@@ -7,5 +7,8 @@ It has a validate and clean mode. It can fix the following problems:
 3. entity with a deleted owner
 4. entity that is missing an entry in its <type> table
 
+It will also try to fix out of memory errors caused by corruption of enabled
+plugins. You must hit the URL: http//yoursite.com/mod/dbvalidate/repair.php
+
 Currently, it assumes its directory is set to dbvalidate.
 
