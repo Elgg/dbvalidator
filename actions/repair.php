@@ -13,6 +13,8 @@
 
 set_time_limit(0);
 
+global $CONFIG;
+
 $users = dbvalidate_get_bad_users();
 
 // repair bad users - give them new usernames
