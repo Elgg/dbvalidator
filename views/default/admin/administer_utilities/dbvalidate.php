@@ -16,7 +16,7 @@ echo elgg_view('output/url', array(
 	'is_trusted' => true,
 	'class' => 'elgg-button elgg-button-submit',
 	'id' => 'dbv-validate',
-));
+)) . "<br><br>";
 
 echo elgg_view('output/url', array(
 	'text' => elgg_echo('dbvalidate:repair'),
@@ -26,6 +26,7 @@ echo elgg_view('output/url', array(
 	'class' => 'elgg-button elgg-button-submit',
 	'id' => 'dbv-repair',
 ));
+echo "<br>" . elgg_echo('dbvalidate:repair:instructions');
 
 echo elgg_view('graphics/ajax_loader', array(
 	'id' => 'dbv-ajax-spinner',

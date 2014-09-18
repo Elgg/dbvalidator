@@ -8,3 +8,9 @@ It has a validate and a clean mode. It can fix the following problems:
 4. entity that is missing an entry in its <type> table
 
 
+Changelog:
+
+1.9.0:
+- updated for Elgg 1.9,
+- some cleanup in code,
+- added German translations.

@@ -4,7 +4,7 @@
  *
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
  * @author Cash Costello
- * @copyright Cash Costello 2010
+ * @copyright Cash Costello 2010-2014
  */
 
 /*
@@ -12,6 +12,10 @@
  */
 
 set_time_limit(0);
+
+$access_status = access_get_show_hidden_status();
+access_show_hidden_entities(true);
+$db_prefix = elgg_get_config('dbprefix');
 
 $users = dbvalidate_get_bad_users();
 
@@ -31,29 +35,28 @@ if ($users !== false && count($users) > 0) {
 		$entity = get_user($user->guid);
 		$entity->username = $new_username;
 		$entity->save();
-		echo "<li>GUID: $entity->guid  USERNAME: $entity->username </li>";
+		echo "<li>" . elgg_echo('dbvalidate:GUID') . $entity->guid . elgg_echo('dbvalidate:USERNAME') . $entity->username . "</li>";
 	}
 	echo "</ul>";
 }
 
 echo "<br />";
 
-
 $bad_guids = dbvalidate_get_bad_entities();
 
 // write html for bad entities - they get assigned to admin running this
 if (count($bad_guids) > 0) {
-	$new_guid = get_loggedin_userid();
+	$new_guid = elgg_get_logged_in_user_guid();
 	echo elgg_echo('dbvalidate:fixbadowners');
 	echo "<ul>";
 	foreach ($bad_guids as $guid) {
-		$query = "UPDATE {$CONFIG->dbprefix}entities set owner_guid={$new_guid} WHERE guid={$guid}";
+		$query = "UPDATE {$db_prefix}entities set owner_guid={$new_guid} WHERE guid={$guid}";
 		$ret = update_data($query);
 		echo "<li>";
 		if ($ret) {
-			echo "GUID: {$guid} - " . elgg_echo('dbvalidate:newowner');
+			echo elgg_echo('dbvalidate:GUID') . $guid . " - " . elgg_echo('dbvalidate:newowner');
 		} else {
-			echo "GUID: {$guid} - " . elgg_echo('dbvalidate:failowner');
+			echo elgg_echo('dbvalidate:GUID') . $guid . " - " . elgg_echo('dbvalidate:failowner');
 		}
 		echo "</li>";
 	}
@@ -70,11 +73,11 @@ if ($incomplete_entities !== false && count($incomplete_entities) > 0) {
 	echo "<ul>";
 	foreach ($incomplete_entities as $entity) {
 		echo "<li>";
-		echo "GUID: {$entity->guid}, " . elgg_echo('dbvalidate:type') . ": {$entity->type}";
+		echo elgg_echo('dbvalidate:GUID') . $entity->guid . ", " . elgg_echo('dbvalidate:type') . ": " .$entity->type;
 		if ($subtype = get_subtype_from_id($entity->subtype)) {
 			echo ":$subtype";
 		}
-		$query = "DELETE FROM {$CONFIG->dbprefix}entities WHERE guid = {$entity->guid} LIMIT 1";
+		$query = "DELETE FROM {$db_prefix}entities WHERE guid = {$entity->guid} LIMIT 1";
 		if (delete_data($query)) {
 			echo ' ' . elgg_echo('dbvalidate:removed');
 		}
@@ -86,6 +89,7 @@ if ($incomplete_entities !== false && count($incomplete_entities) > 0) {
 
 echo "<br />";
 
+access_show_hidden_entities($access_status);
 
 echo elgg_echo('dbvalidate:done');
 
