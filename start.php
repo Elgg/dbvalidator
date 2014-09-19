@@ -2,7 +2,7 @@
 /**
  * Validate and repair an Elgg database
  *
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @license MIT license http://opensource.org/licenses/MIT
  * @author Cash Costello
  * @copyright Cash Costello 2010-2014
  */

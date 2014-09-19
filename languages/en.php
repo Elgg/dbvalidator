@@ -11,7 +11,6 @@ return array(
 	'dbvalidate:validate' => "Validate",
 	'dbvalidate:repair' => "Repair",
 	'dbvalidate:instructions' => "\"Validate\" checks for users without usernames, entities with bad owners, and incomplete entities. \"Repair\" fixes these problems. The users are assigned usernames of the form \"userxx\". Entities with bad owners are assigned to you and incomplete entities are removed.",
-	'dbvalidate:repair:instructions' => '<b>(Please backup your database in any case before using the repair option!)</b>',
 
 	'dbvalidate:users' => 'Users',
 	'dbvalidate:entities' => 'Entities',

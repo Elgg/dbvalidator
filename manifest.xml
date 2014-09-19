@@ -3,13 +3,13 @@
 	<name>Database Cleaner</name>
 	<id>dbvalidator</id>
 	<author>Cash Costello</author>
-	<version>1.9.0</version>
+	<version>1.5</version>
 	<category>admin</category>
 	<category>utility</category>
-	<description>Attempts to repair issues in the database.</description>
-	<website>http://www.cashcostello.com/</website>
-	<copyright>(C) Cash Costello 2010-2014</copyright>
-	<license>GNU General Public License version 2</license>
+	<description>Repairs issues in the database.</description>
+	<website>https://github.com/cash/elgg-db-cleaner</website>
+	<copyright>Cash Costello 2010-2014</copyright>
+	<license>MIT license</license>
 	<requires>
 		<type>elgg_release</type>
 		<version>1.9</version>

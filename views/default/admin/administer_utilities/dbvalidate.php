@@ -26,7 +26,6 @@ echo elgg_view('output/url', array(
 	'class' => 'elgg-button elgg-button-submit',
 	'id' => 'dbv-repair',
 ));
-echo "<br>" . elgg_echo('dbvalidate:repair:instructions');
 
 echo elgg_view('graphics/ajax_loader', array(
 	'id' => 'dbv-ajax-spinner',

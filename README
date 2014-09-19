@@ -1,6 +1,7 @@
 Elgg Database Cleaner
+=======================
 
-It has a validate and a clean mode. It can fix the following problems:
+It has a validate and a repair mode. It can fix the following problems:
 
 1. user without a username
 2. entity with owner_guid set to 0 (object or group)
@@ -8,9 +9,6 @@ It has a validate and a clean mode. It can fix the following problems:
 4. entity that is missing an entry in its <type> table
 
 
-Changelog:
-
-1.9.0:
-- updated for Elgg 1.9,
-- some cleanup in code,
-- added German translations.
+Installing
+-------------------
+The directory for the plugin must be named dbvalidator.

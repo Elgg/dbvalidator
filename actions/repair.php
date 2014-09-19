@@ -1,8 +1,8 @@
 <?php
 /**
- * Validate and repair an Elgg database
+ * Repair an Elgg database
  *
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @license MIT license http://opensource.org/licenses/MIT
  * @author Cash Costello
  * @copyright Cash Costello 2010-2014
  */
@@ -13,8 +13,10 @@
 
 set_time_limit(0);
 
+// this is needed for calling get_user() on disabled users.
 $access_status = access_get_show_hidden_status();
 access_show_hidden_entities(true);
+
 $db_prefix = elgg_get_config('dbprefix');
 
 $users = dbvalidate_get_bad_users();
@@ -35,7 +37,7 @@ if ($users !== false && count($users) > 0) {
 		$entity = get_user($user->guid);
 		$entity->username = $new_username;
 		$entity->save();
-		echo "<li>" . elgg_echo('dbvalidate:GUID') . $entity->guid . elgg_echo('dbvalidate:USERNAME') . $entity->username . "</li>";
+		echo "<li>" . elgg_echo('dbvalidate:GUID') . $entity->guid . ' ' . elgg_echo('dbvalidate:USERNAME') . $entity->username . "</li>";
 	}
 	echo "</ul>";
 }

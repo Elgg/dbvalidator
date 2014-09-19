@@ -11,7 +11,6 @@ return array(
 	'dbvalidate:validate' => "Überprüfen",
 	'dbvalidate:repair' => "Reparieren",
 	'dbvalidate:instructions' => "\"Überprüfen\" sucht nach Benutzern ohne Benutzernamen-Eintrag, Entitäten ohne gültigem Besitzer-Eintrag und Entitäten mit unvollständigen Datenbankeinträgen. \"Reparieren\" bringt diese fehlerhaften Datenbankeinträge in Ordnung. Den Benutzern ohne Benutzernamen-Eintrag werden Benutzernamen der Form \"userxx\" zugewiesen. Entitäten ohne gültigem Besitzer-Eintrag werden Deinem Account zugewiesen und Entitäten mit unvollständigen Datenbankeinträgen werden gelöscht.",
-	'dbvalidate:repair:instructions' => '<b>(Bitte sichere in jeden Fall Deine Datenbank, bevor Du die \"Reparieren\"-Option anwendest!)</b>',
 
 	'dbvalidate:users' => 'Benutzer',
 	'dbvalidate:entities' => 'Entitäten',
