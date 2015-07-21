@@ -1,4 +1,4 @@
 {
-    "name": "elgg/db_cleaner",
+    "name": "elgg/dbvalidator",
     "type": "elgg-plugin"
 }
