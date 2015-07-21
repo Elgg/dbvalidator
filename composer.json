@@ -1,0 +1,8 @@
+{
+    "name": "cash/elgg-db-cleaner",
+    "type": "elgg-plugin",
+    "extra": {
+        "installer-name": "db_cleaner"
+    },
+    "license": "MIT"
+}
