@@ -3,7 +3,7 @@
 	<name>Database Cleaner</name>
 	<id>dbvalidator</id>
 	<author>Cash Costello</author>
-	<version>1.5</version>
+	<version>2.0</version>
 	<category>admin</category>
 	<category>utility</category>
 	<description>Repairs issues in the database.</description>

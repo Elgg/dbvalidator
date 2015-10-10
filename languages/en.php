@@ -6,6 +6,9 @@
 return array(
 
 	'admin:administer_utilities:dbvalidate' => "Database cleaner",
+	'dbvalidate:badusers:count' => "There are %s users without usernames",
+	'dbvalidate:badentities:count' => "There are %s bad entities without owners",
+	'dbvalidate:incomplete_entities:count' => "There are %s incomplete entities",
 
 	'dbvalidate:title' => "Database utility",
 	'dbvalidate:validate' => "Validate",
