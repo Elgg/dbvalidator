@@ -35,6 +35,49 @@ function dbvalidate_get_bad_users() {
 }
 
 /**
+ * Count users without a username
+ */
+function dbvalidate_count_bad_users() {
+	$db_prefix = elgg_get_config('dbprefix');
+	
+	$query = "SELECT COUNT(ue.guid) as count from {$db_prefix}users_entity ue WHERE username=''";
+	$users = get_data($query);
+	return $users[0]->count;
+}
+
+function dbvalidate_fix_bad_users() {
+	$db_prefix = elgg_get_config('dbprefix');
+	$query = "UPDATE {$db_prefix}users_entity ue SET ue.username = CONCAT('dbvfixeduser', ue.guid) WHERE ue.username = ''";
+	update_data($query);
+}
+
+function dbvalidate_count_bad_entities() {
+
+	$db_prefix = elgg_get_config('dbprefix');
+
+	$query = "SELECT COUNT(e.guid) as count from {$db_prefix}entities e "
+	. "LEFT JOIN {$db_prefix}entities o ON e.owner_guid = o.guid "
+	. "WHERE (e.type='object' OR e.type='group') AND (o.guid IS NULL OR o.guid = 0)";
+	
+	$result = get_data($query);
+	$num_entities = $result[0]->count;
+	
+	return $num_entities;
+}
+
+function dbvalidate_fix_bad_entities() {
+	$db_prefix = elgg_get_config('dbprefix');
+	
+	$guid = elgg_get_logged_in_user_guid();
+	
+	$query = "UPDATE {$db_prefix}entities e LEFT JOIN {$db_prefix}entities o ON e.owner_guid = o.guid"
+	. " SET e.owner_guid = {$guid}"
+	. " WHERE (e.type = 'object' OR e.type='group') AND (o.guid IS NULL OR o.guid = 0)";
+	
+	update_data($query);
+}
+
+/**
  * Look for entities with an owner that cannot be loaded
  */
 function dbvalidate_get_bad_entities() {
@@ -79,6 +122,51 @@ function dbvalidate_get_bad_entities() {
 
 	return $bad_guids;
 }
+
+
+/**
+ * Looks for entities without a corresponding entry in the correct type table.
+ */
+function dbvalidate_count_incomplete_entities() {
+
+	$db_prefix = elgg_get_config('dbprefix');
+
+	$types = array('user', 'site', 'group', 'object');
+
+	$total = 0;
+	
+	foreach ($types as $type) {
+		// thank you for consistent table naming
+		$query = "SELECT count(e.guid) as count FROM {$db_prefix}entities e WHERE e.type='{$type}'
+			AND NOT EXISTS (SELECT t.guid FROM {$db_prefix}{$type}s_entity t WHERE t.guid = e.guid)";
+
+		if ($result = get_data($query)) {
+			$total += $result[0]->count;
+		}
+	}
+
+	return $total;
+}
+
+
+function dbvalidate_fix_incomplete_entities() {
+	$db_prefix = elgg_get_config('dbprefix');
+
+	$types = array('user', 'site', 'group', 'object');
+
+	$total = 0;
+	//1966915
+	foreach ($types as $type) {
+		// thank you for consistent table naming
+		$query = "DELETE e.* FROM {$db_prefix}entities e WHERE e.type = '{$type}'"
+		. " AND NOT EXISTS (SELECT t.guid as guid FROM {$db_prefix}{$type}s_entity t WHERE t.guid = e.guid)";
+
+		delete_data($query);
+	}
+
+	return $total;
+}
+
 
 /**
  * Looks for entities without a corresponding entry in the correct type table.
