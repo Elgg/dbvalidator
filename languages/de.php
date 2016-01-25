@@ -13,8 +13,8 @@ return array(
 	'dbvalidate:title' => "Datenbank-Tool",
 	'dbvalidate:validate' => "Überprüfen",
 	'dbvalidate:repair' => "Reparieren",
-	'dbvalidate:instructions' => "<b>\"Überprüfen\"</b> sucht nach Benutzern ohne Benutzernamen-Eintrag, Entitäten ohne gültigem Besitzer-Eintrag und Entitäten mit unvollständigen Datenbankeinträgen.<br>
-	<b>\"Reparieren\"</b> bringt diese fehlerhaften Datenbankeinträge in Ordnung. Dabei werden den Benutzern ohne Benutzernamen-Eintrag Benutzernamen der Form \"userxx\" zugewiesen. Entitäten ohne gültigem Besitzer-Eintrag werden Deinem Account zugewiesen und Entitäten mit unvollständigen Datenbankeinträgen werden gelöscht.",
+	'dbvalidate:instructions' => "\"Überprüfen\" sucht nach Benutzern ohne Benutzernamen-Eintrag, Entitäten ohne gültigem Besitzer-Eintrag und Entitäten mit unvollständigen Datenbankeinträgen.<br>
+	\"Reparieren\" bringt diese fehlerhaften Datenbankeinträge in Ordnung. Dabei werden den Benutzern ohne Benutzernamen-Eintrag Benutzernamen der Form \"userxx\" zugewiesen. Entitäten ohne gültigem Besitzer-Eintrag werden Deinem Account zugewiesen und Entitäten mit unvollständigen Datenbankeinträgen werden gelöscht.",
 
 	'dbvalidate:users' => 'Benutzer',
 	'dbvalidate:entities' => 'Entitäten',
