@@ -15,12 +15,16 @@ elgg_register_event_handler('init', 'system', 'dbvalidate_init');
 function dbvalidate_init() {
 
 	elgg_register_admin_menu_item('administer', 'dbvalidate', 'administer_utilities');
+	elgg_register_admin_menu_item('administer', 'dupe_metadata', 'administer_utilities');
 
 	elgg_register_js('dbvalidate', 'js/dbvalidate.js', 'footer');
+	elgg_register_js('dupe_metadata', 'js/dupe_metadata.js', 'footer');
 
 	$action_path = dirname(__FILE__) . '/actions';
 	elgg_register_action('dbvalidate/validate', "$action_path/validate.php", 'admin');
 	elgg_register_action('dbvalidate/repair', "$action_path/repair.php", 'admin');
+	elgg_register_action('dbvalidate/identify_dupe_metadata', "$action_path/identify_dupe_metadata.php", 'admin');
+	elgg_register_action('dbvalidate/fix_dupe_metadata', "$action_path/fix_dupe_metadata.php", 'admin');
 }
 
 /**
